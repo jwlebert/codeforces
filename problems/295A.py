@@ -11,22 +11,21 @@ for _ in range(q_count):
     queries.append(tuple(map(int, input().split())))
 
 # start with diff array
-q_arr = [0] * op_count
+q_arr = [0] * (op_count + 1)
 for l, r in queries:
     q_arr[l - 1] += 1
-    if r == op_count: continue
     q_arr[r] -= 1 # undo 1 after the range ends
 
 # prefix sum it
 for i in range(1, len(q_arr)):
     q_arr[i] += q_arr[i - 1]
+op_application_count = q_arr[:len(q_arr) - 1]
 
 # use q_arr to make second diff array to calculate applications of operations
-op_arr = [0] * arr_len
+op_arr = [0] * (arr_len + 1)
 for i, op in enumerate(q_arr):
     l, r, d = operations[i]
     op_arr[l - 1] += op
-    if r == arr_len: continue
     op_arr[r] -= op # stop 1 after the range ends
 
 # prefix sum it

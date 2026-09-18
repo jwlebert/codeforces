@@ -9,10 +9,10 @@ for _ in range(q_count):
     queries.append(tuple(map(int, input().split())))
 
 # start with diff array
-op_arr = [0] * arr_len
+q_arr = [0] * op_count
 for l, r in queries:
-    op_diff_arr[l] += 1
-    op_diff_arr[r] += 1
+    q_arr[l] += 1
+    q_arr[r] += 1
 
 # prefix sum it
 for i in range(1, len(op_arr)):

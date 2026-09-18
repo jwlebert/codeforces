@@ -14,25 +14,31 @@ for _ in range(q_count):
 q_arr = [0] * op_count
 for l, r in queries:
     q_arr[l - 1] += 1
-    q_arr[r - 1] += 1
+    if r == op_count: continue
+    q_arr[r] -= 1 # undo 1 after the range ends
 
 # prefix sum it
 for i in range(1, len(q_arr)):
     q_arr[i] += q_arr[i - 1]
 
-# use q_arr to make second diff array to calculate impact of operations
+# use q_arr to make second diff array to calculate applications of operations
 op_arr = [0] * arr_len
-for op in q_arr:
-    l, r, d = operations[op]
-    op_arr[l - 1] += d
-    op_arr[r - 1] += d
+for i, op in enumerate(q_arr):
+    l, r, d = operations[i]
+    op_arr[l - 1] += op
+    if r == arr_len: continue
+    op_arr[r] -= op # stop 1 after the range ends
 
 # prefix sum it
 for i in range(1, len(op_arr)):
     op_arr[i] += op_arr[i - 1]
 
+add_arr = [
+    n * operations[i][2] for i, n in enumerate(op_arr)
+]
+
 res = []
 for i in range(arr_len):
-    res.append(numbers[i] + op_arr[i])
+    res.append(numbers[i] + add_arr[i])
 
 print(*res)

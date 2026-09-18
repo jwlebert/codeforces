@@ -23,18 +23,15 @@ op_application_count = q_arr[:len(q_arr) - 1]
 
 # use q_arr to make second diff array to calculate applications of operations
 op_arr = [0] * (arr_len + 1)
-for i, op in enumerate(q_arr):
+for i, count in enumerate(op_application_count):
     l, r, d = operations[i]
-    op_arr[l - 1] += op
-    op_arr[r] -= op # stop 1 after the range ends
+    op_arr[l - 1] += count * d
+    op_arr[r] -= count * d # stop 1 after the range ends
 
 # prefix sum it
 for i in range(1, len(op_arr)):
     op_arr[i] += op_arr[i - 1]
-
-add_arr = [
-    n * operations[i][2] for i, n in enumerate(op_arr)
-]
+add_arr = op_arr[:len(op_arr) - 1]
 
 res = []
 for i in range(arr_len):

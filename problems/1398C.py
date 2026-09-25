@@ -11,14 +11,14 @@ for test_case in test_cases:
     # so basic prefix sum, but account for length (-1 each number)
     adj_test_case = [n - 1 for n in test_case] # test case adjusted for len
 
-    prefix_freq = {0: 0}
+    prefix_freq = {0: 1}
     prefix_sum = [0] * (len(test_case) + 1)
-    for i, n in enumerate(test_case, start=1):
+    for i, n in enumerate(adj_test_case, start=1):
         prefix = prefix_sum[i - 1] + n
 
         # 0 is always in freq, so always true when prefix == 0
         if prefix in prefix_freq: 
-            good_sub_arr_ct += 1 + prefix_freq.get(prefix, 0)
+            good_sub_arr_ct += prefix_freq.get(prefix, 0)
 
         prefix_sum[i] = prefix
         prefix_freq[prefix] = prefix_freq.get(prefix, 0) + 1
